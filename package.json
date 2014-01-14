@@ -1,0 +1,24 @@
+{
+  "name": "mayflower",
+  "version": "0.0.1",
+  "description": "A simple SQL database migrator using ODBC for Node.js.",
+  "author": "Stack Exchange Inc.",
+  "contributors": [
+    {
+      "name": "Bret Copeland",
+      "email": "bret@atlantisflight.org"
+    }
+  ],
+  "main": "./lib/index.js",
+  "keywords": [
+    "sql",
+    "migration",
+    "odbc"
+  ],
+  "dependencies": {
+    "odbc": "~0.6.2",
+    "async": "~0.2.9",
+    "commander": "~2.1.0"
+  },
+  "private": true
+}
