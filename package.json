@@ -10,6 +10,7 @@
     }
   ],
   "main": "./lib/mayflower.js",
+  "bin": "./lib/cli.js",
   "keywords": [
     "sql",
     "migration",
