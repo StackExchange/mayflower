@@ -1,6 +1,6 @@
 {
   "name": "mayflower",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple SQL Server database migrator using Node.js and ODBC.",
   "author": "Stack Exchange Inc.",
   "contributors": [
@@ -9,12 +9,12 @@
       "email": "bret@atlantisflight.org"
     }
   ],
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/StackExchange/mayflower.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StackExchange/mayflower.git"
   },
-  "bugs" : {
-    "url" : "https://github.com/StackExchange/mayflower/issues"
+  "bugs": {
+    "url": "https://github.com/StackExchange/mayflower/issues"
   },
   "licenses": [
     {
