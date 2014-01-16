@@ -73,7 +73,7 @@ $ ./node_modules/.bin/mayflower --help
     -k, --key [key]          The key inside the json file for the connection string (dot notation).
 ```
 
-A directory, plus either 1.) a connection string, or 2.) a json file and key, must be provided. All other parameters are optional.
+A directory, plus either 1. a connection string, or 2. a json file and key, must be provided. All other parameters are optional.
 
 __Example__
 
@@ -112,7 +112,6 @@ The only method you will likely care about is `migrateAll( options )`
 ___Returns___ an array of result objects, each with the following format:
 
 ```javascript
-{
 {
   name: String,        // filename of the .sql script
   skipped: Boolean,    // true indicates the script has been previously applied and was skipped
