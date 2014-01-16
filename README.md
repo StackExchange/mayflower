@@ -34,19 +34,7 @@ odbcinst -i -d -f ~/tds.driver.template
 
 ## Install
 
-Mayflower is not currently in npm, simply because there hasn't been a discussion about open-sourcing it yet.
-
-To add it to your package.json file, use this format:
-
-```javascript
-{
-  "dependencies": {
-    "mayflower": "git+ssh://git@github.com:StackExchange/mayflower.git"
-  }
-}
-```
-
-And then run `npm install`. NPM is ignorant of any changes made to a git repository, so you would need to upgrade the Mayflower package at any point, run `npm update mayflower`.
+    npm install mayflower
 
 ## Usage
 
