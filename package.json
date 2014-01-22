@@ -1,6 +1,6 @@
 {
   "name": "mayflower",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A simple SQL Server database migrator using Node.js and ODBC.",
   "author": "Stack Exchange Inc.",
   "contributors": [
