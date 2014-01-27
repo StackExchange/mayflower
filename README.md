@@ -59,6 +59,7 @@ $ ./node_modules/.bin/mayflower --help
     -t, --table [name]       Name of the Migrations history table (default: Migrations).
     -j, --json [filename]    Name of a json file where the connection string.
     -k, --key [key]          The key inside the json file for the connection string (dot notation).
+    -p, --preview            Outputs results for migration scripts, but rolls back every transaction.
 ```
 
 A directory, plus either 1. a connection string, or 2. a json file and key, must be provided. All other parameters are optional.
