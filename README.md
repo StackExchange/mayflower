@@ -97,6 +97,7 @@ The only method you will likely care about is `migrateAll( options )`
 * `options` An optional object parameter with the following defaults: `{ output: true, force: false }`
     * `output` determines whether `migrateAll()` will execute `console.log` statements.
     * `force` If true, previously applied migration scripts will be run again.
+    * `preview` If true, all of the migration scripts run as expected, but the SQL transactions are rolled back, so the changes do not take affect.
 
 ___Returns___ an array of result objects, each with the following format:
 
