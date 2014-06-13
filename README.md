@@ -1,5 +1,7 @@
 # Mayflower
 
+[![Dependency Status](https://gemnasium.com/StackExchange/mayflower.svg)](https://gemnasium.com/StackExchange/mayflower)
+
 A simple database migration utility for making schema changes, or other one-time modifications, to a SQL Server database. It is a node.js port of the C# SQL Server migrator which Stack Overflow uses.
 
 It's the _Mayflower_ because... you use it to migrate, obviously.
