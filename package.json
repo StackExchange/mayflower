@@ -1,7 +1,7 @@
 {
   "name": "mayflower",
   "version": "0.0.9",
-  "description": "A simple SQL Server database migrator using Node.js and ODBC.",
+  "description": "A simple MS SQL Server database migrator using Node.js and TDS.",
   "author": "Stack Exchange Inc.",
   "contributors": [
     {
@@ -29,12 +29,12 @@
     "server",
     "migration",
     "migrator",
-    "odbc",
-    "freetds"
+    "tds",
+    "mircosoft"
   ],
   "dependencies": {
-    "odbc": "~0.6.2",
-    "async": "~0.2.9",
-    "commander": "~2.1.0"
+    "commander": "2.2.0",
+    "mssql": "0.5.3",
+    "odyssey": "0.2.0"
   }
 }

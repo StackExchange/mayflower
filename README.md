@@ -6,37 +6,11 @@ A simple database migration utility for making schema changes, or other one-time
 
 It's the _Mayflower_ because... you use it to migrate, obviously.
 
-## Requirements
-
-Mayflower uses [node-odbc](https://github.com/wankdanker/node-odbc) to talk to SQL server. This, in turn, requires an ODBC driver such as FreeTDS. On CentOS, this can be setup as follows:
-
-Create a file in your home directory ~/ called tds.driver.template with the following contents:
-
-```
-[FreeTDS]
-Description = Free TDS ODBC Driver
-Driver = /usr/lib64/libtdsodbc.so
-```
-
-Then install and configure FreeTDS with the following commands:
-
-```
-mkdir -p /opt/epel
-cd /opt/epel
-
-EPELRPM=epel-release-6-8.noarch.rpm
-
-wget -q -N "http://dl.fedoraproject.org/pub/epel/6/i386/$EPELRPM"
-rpm -ivh "$EPELRPM"
-
-yum install -y unixODBC unixODBC-devel freetds
-
-odbcinst -i -d -f ~/tds.driver.template
-```
-
 ## Install
 
     npm install mayflower
+
+Mayflower uses [mssql](https://github.com/patriksimek/node-mssql) and [tedious](https://github.com/pekim/tedious) libraries for SQL Server communication, and supports all operating systems.
 
 ## Usage
 
@@ -59,8 +33,8 @@ $ ./node_modules/.bin/mayflower --help
     -f, --force              Forces scripts which have already been applied to be applied again.
     -s, --script [filename]  Specifies only a single script to be run.
     -t, --table [name]       Name of the Migrations history table (default: Migrations).
-    -j, --json [filename]    Name of a json file where the connection string.
-    -k, --key [key]          The key inside the json file for the connection string (dot notation).
+    -j, --json [filename]    Name of a json file where the connection object.
+    -k, --key [key]          The key inside the json file for the connection object (dot notation).
     -p, --preview            Outputs results for migration scripts, but rolls back every transaction.
 ```
 
@@ -73,7 +47,26 @@ __Example__
 ```javascript
 {
   "sqlServer": {
-    "myDb": "DRIVER={FreeTDS};SERVER=localhost;PORT=1433;DATABASE=MyDb;UID=me;PWD=mypassword;TDS_VERSION=7.2"
+    "myDb": {
+      "server": "localhost",
+      "database": "database_name",
+      "port": 1433,
+      "user": "user",
+      "password": "password",
+      "options": {
+        "tdsVersion": "7_4"
+      }
+    }
+  }
+}
+```
+
+For legacy purposes, using a connection string instead of an object is also supported:
+
+```javascript
+{
+  "sqlServer": {
+    "myDb": "SERVER=localhost;PORT=1433;DATABASE=MyDb;UID=me;PWD=mypassword;TDS_VERSION=7.4"
   }
 }
 ```
@@ -88,20 +81,21 @@ migrate.sh
 
     Mayflower(connectionString, migrateDirectory, migrationsTable)
 
-* `connectionString` The string used to create a connection to the database.
+* `connectionObject` The object or string used to create a connection to the database.
 * `migrateDirectory` The directory where to look for `*.sql` scripts.
 * `migrationsTable` The name of the table where migration history will be stored (defaults to "Migrations"). This table will be created if it does not already exist.
 
 #### Migrating
 
-The only method you will likely care about is `migrateAll( options )`
+The only method you will likely care about is `migrateAll( options, callback )`
 
 * `options` An optional object parameter with the following defaults: `{ output: true, force: false }`
     * `output` determines whether `migrateAll()` will execute `console.log` statements.
     * `force` If true, previously applied migration scripts will be run again.
     * `preview` If true, all of the migration scripts run as expected, but the SQL transactions are rolled back, so the changes do not take affect.
+* `callback` A function which accepts two arguments: an Error, and an array of MigrationResults.
 
-___Returns___ an array of result objects, each with the following format:
+Each `MigrationResult` has the following format:
 
 ```javascript
 {
@@ -112,30 +106,17 @@ ___Returns___ an array of result objects, each with the following format:
 }
 ```
 
-If an error occured, the return value will be a single Error object instead of an array.
-
-__Example__
-
-```javascript
-var Mayflower = require('mayflower');
-var connString = 'DRIVER={FreeTDS};SERVER=localhost;PORT=1433;DATABASE=MyDb;UID=me;PWD=mypassword;TDS_VERSION=7.2';
-var m = new Mayflower(connString, 'path/to/migrations');
-
-var results = m.migrateAll();
-
-if (results instanceof Error) {
-  console.error(results.stack);
-  process.exit(1);
-}
-
-process.exit(0);
-```
+For an example, see [cli.js](https://github.com/StackExchange/mayflower/blob/master/lib/cli.js).
 
 #### Additional Methods
 
 There are a few additional public methods which are used internally, but may have limited external usefulness. Review the implementation in [lib/mayflower.js](https://github.com/StackExchange/mayflower/blob/master/lib/mayflower.js) for details.
 
-* `migrate ( db, options, script )` Migrates only a single script.
-* `getDbConnection ( )` Opens a database connection.
+* `migrate ( db, options, script, callback )` Migrates only a single script.
+    * `db` A dbConnection obtained from `getDbConnection()`.
+    * `options` Same as the options accepted by `migrateAll()`.
+    * `script` must be a Script object returned from `getScript()` or `getAllScripts()`.
+    * `callback` signature: `(error, MigrationResult)`
+* `getDbConnection ( callback )` Opens a database connection. Callback signature `(error, dbConnection)`
 * `getAllScripts ( )` Returns an array of script objects.
-* `getScript ( name )` Returns a single script object.
+* `getScript ( name )` Returns a single script object. Name is relative to the `migrationDirectory` which the Mayflower object was constructed with.
