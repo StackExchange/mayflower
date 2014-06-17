@@ -35,6 +35,6 @@
   "dependencies": {
     "commander": "2.2.0",
     "mssql": "0.5.3",
-    "odyssey": "0.2.0"
+    "odyssey": "0.2.1"
   }
 }
