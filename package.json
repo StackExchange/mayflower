@@ -1,6 +1,6 @@
 {
   "name": "mayflower",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple MS SQL Server database migrator using Node.js and TDS.",
   "author": "Stack Exchange Inc.",
   "contributors": [
