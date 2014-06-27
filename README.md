@@ -120,3 +120,6 @@ There are a few additional public methods which are used internally, but may hav
 * `getDbConnection ( callback )` Opens a database connection. Callback signature `(error, dbConnection)`
 * `getAllScripts ( )` Returns an array of script objects.
 * `getScript ( name )` Returns a single script object. Name is relative to the `migrationDirectory` which the Mayflower object was constructed with.
+* `getOutstandingMigrations ( callback )` Gets a list of un-applied migrations. Callback signature `(error, scripts)` where scripts is an array of Script objects.
+
+Script objects contain `name`, `hash`, and `commands` properties where name and hash are strings, and commands is an array of SQL strings.
